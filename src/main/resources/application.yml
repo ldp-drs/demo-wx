@@ -1,0 +1,102 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 200
+      min-spare: 30
+    connection-timeout: 5000ms
+  prot: 8080
+  servlet:
+    context-path: /emos-wx-api
+
+spring:
+  #  mysql配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/ludp?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: root
+      initial-size: 8
+      max-active: 16
+      min-idle: 8
+      max-wait: 60000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+
+  #redis配置
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: abc123456
+    jedis:
+      pool:
+        max-active: 1000
+        max-wait: -1ms
+        max-idle: 16
+        min-idle: 8
+
+  #mangodb数据库配置
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: ludp
+      authentication-database: admin
+      username: admin
+      password: abc123456
+
+  #发送邮件
+  mail:
+    default-encoding: UTF-8
+    host: mail.qq.com
+    username: 1850609545@qq.com
+    password: ldp5201314drs..
+
+#mybatis配置
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.ldp.emos.wx.db.pojo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+#日志配置
+logging:
+  level:
+    root: info
+    com.ldp.emos.wx.db.dao: warn
+  pattern:
+    console: "%d{HH:mm:ss} %-5level %msg%n"
+
+#token配置信息
+emos:
+  jwt:
+    secret: abc123456
+    expire: 5
+    cache-expire: 10
+  #人脸签到
+  face:
+    createFaceModelUrl: http://192.168.43.101:3000/create_face_model
+    checkinUrl: http://192.168.43.101:3000/checkin
+  #邮箱发送
+  email:
+    system: 1850609545@qq.com
+    hr: 1850609545@qq.com
+  #临时存储图片的文件夹
+  image-folder: D:/emos/image
+  #python人脸识别 code
+#  code: F4BCE38169006745
+#  code: 3506850910889820
+  code: F165CE1651165115
+  recieveNotify: http://192.168.43.216:8080/emos-wx-api/meeting/recieveNotify
+workflow:
+  url: http://192.168.43.101:9090/emos-workflow
+
+#小程序id和密钥
+wx:
+  app-id: wxc3803b5f918f3d6d
+  app-secret: 50c613cfa07dacbeda6c82a30016ca5c
